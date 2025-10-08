@@ -1,0 +1,248 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Start Workflow",
+        "height": 288,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -944,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "3a441609-b15d-4dd5-af85-11be42e05335",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Store in Google Sheet",
+        "height": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "fddff419-b03a-4c8c-b9d2-f494e0c9b9c1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Get @linkedin.com emails",
+        "height": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "803419fd-19f8-46bf-9547-d3564451e2d6",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        -128
+      ],
+      "id": "ec07560a-d58f-49cd-9e58-eaa0768f2e86",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## Use Case:\n\nTake job leads ( advertisements to apply) from our email and extract data from body of email. Put the data into a sheet. Identify company, job title, date, link, description, contact information.\n\nQ how to handle multiple jobs in one email?\n\n\n",
+        "width": 704
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1008,
+        -448
+      ],
+      "typeVersion": 1,
+      "id": "af5ae37a-0f79-4c04-b8ec-fb3d87eed79a",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 10,
+        "simple": false,
+        "filters": {
+          "q": "from:@linkedin.com"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -560,
+        -128
+      ],
+      "id": "5c2bb0f5-2d59-45b5-af70-1a4bf30c7c90",
+      "name": "Get many messages",
+      "webhookId": "7486d8d6-af77-4680-b659-a674d2ed59e5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s1HrUPVB0hSEB3WS",
+          "name": "Job Email"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "143VI8dTHZjpszVc3sjPXjrLOsmMIDLvD4yh13pV2_yc",
+          "mode": "list",
+          "cachedResultName": "Linkedin N8N emails",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/143VI8dTHZjpszVc3sjPXjrLOsmMIDLvD4yh13pV2_yc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 876567452,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/143VI8dTHZjpszVc3sjPXjrLOsmMIDLvD4yh13pV2_yc/edit#gid=876567452"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "output"
+          ],
+          "schema": [
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        -144
+      ],
+      "id": "7e79e366-3732-4591-80f0-dc9b686220a3",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RKy46GvZ2Lgwasvk",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## AI summarize message",
+        "height": 288
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "6f00b738-b999-4774-9db6-97a67be69b2d",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<role> You are a job search coach. Extract {{ $json.headers.from }}  so that it can be added to a google sheet.</role>\n\n<task>I need you to extract the email for each email= {{ $json.headers.from }} and store the value from address</task>\n\n<format>Output file in the form of a CSV with  email</format>\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -320,
+        -144
+      ],
+      "id": "46e30064-cce0-462b-b726-59019a9c5c91",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            \t\"email\": dx\n\t\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        -400
+      ],
+      "id": "c4ddf9f5-dec0-4fb0-a0e1-2fa1c97ae8b9",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many messages": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bbee0d0568e100387e3d148b23dc893ce2f694bb9a8c2b77342e98745fa05343"
+  }
+}
