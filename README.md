@@ -1,15 +1,15 @@
-**SparkUp AI** Project Cohort for N8N kicked off in the summer. 
+## **SparkUp AI** Project Cohort for N8N kicked off in the summer. 
 
-Core team
+## Core team
+- Daniel Manning: n8n certified with basic and advanced courses
+- Diana McLean: n8n certified with basic and advanced courses
+- Karen Greene: n8n certified with basic and advanced courses
+- Nicola Peterson: n8n certified with basic and advanced courses
+- V. Rao Parasa: n8n certified with basic and advanced courses
 - Anuradha Dontha
-- Daniel Manning
-- Diana McLean
-- Karen Greene
-- Nicola Peterson
 - Sumati Natarajan
-- V. Rao Parasa
 
-Extended team
+## Extended team
 - Aishwarya Ragavendiran
 - Christopher Nyambura
 - Sarma B
